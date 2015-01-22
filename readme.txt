@@ -7,7 +7,7 @@ Tested up to: 4.1
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Enable embedding Blrts in your pages and posts by simply pasting in the URL of a public or private Blrt - just like YouTube videos are embedded utilising oEmbed.
+Enable embedding Blrts in your pages and posts by simply pasting in the URL of a public or private Blrt - just like YouTube videos.
 
 == Description ==
 Enable embedding Blrts in your WordPress pages and posts by simply pasting in the URL of a public or private Blrt - just like YouTube videos are embedded utilising oEmbed.
