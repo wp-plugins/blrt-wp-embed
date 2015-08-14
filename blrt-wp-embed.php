@@ -3,7 +3,7 @@
 * Plugin Name: Blrt WP Embed
 * Plugin URI: http://www.blrt.com/wordpress-plugin
 * Description: Enable embedding Blrts in your pages and posts by simply pasting in the URL of a public or private Blrt - just like YouTube videos are embedded utilising oEmbed.
-* Version: 1.0.0
+* Version: 1.0.1
 * Author: Blrt
 * Author URI: http://www.blrt.com
 * License: GPL2
@@ -38,13 +38,15 @@ class BlrtWPEmbed {
     
     private function add_oembed_providers() {
         $convertible_servers = $this->get_convertible_servers();
+        $convertible_short_servers = $this->get_convertible_short_servers();
         $oembed_server = $this->get_oembed_server();
         
-        if(!($convertible_servers && $oembed_server)) return false;
+        if(!($convertible_servers && $convertible_short_servers && $oembed_server)) return false;
         
         $preg_convertible_servers = '(' . implode( '|', array_map( 'preg_quote', $convertible_servers ) ) . ')';
-        wp_oembed_add_provider( "#https?://$preg_convertible_servers/(conv/.*?/)?blrt/.*#i", "https://$oembed_server/oembed", true );
-        
+        $preg_convertible_short_servers = '(' . implode( '|', array_map( 'preg_quote', $convertible_short_servers ) ) . ')';
+        wp_oembed_add_provider( "#https?://$preg_convertible_servers/(embed/?/)?(conv/.*?/)?blrt/.*#i", "https://$oembed_server/oembed", true );
+        wp_oembed_add_provider( "#https?://$preg_convertible_short_servers/.*#i", "https://$oembed_server/oembed", true );
         return true;
     }
     
@@ -52,6 +54,12 @@ class BlrtWPEmbed {
         return apply_filters( 'blrt_wp_embed_convertible_servers' , array(
             'e.blrt.com',
             'm.blrt.co'
+        ) );
+    }
+
+    private function get_convertible_short_servers() {
+        return apply_filters( 'blrt_wp_embed_convertible_short_servers' , array(
+            'r.blrt.com'
         ) );
     }
     
